@@ -18,27 +18,35 @@ build:
   tagPolicy:
     gitCommit: {}
   artifacts:
-  - imageName: gcr.io/microservices-demo-app/emailservice
+  - imageName: gcr.io/rnm-stackdriver-demos/microservices-demo/emailservice
     workspace: src/emailservice
-  - imageName: gcr.io/microservices-demo-app/productcatalogservice
+  - imageName: gcr.io/rnm-stackdriver-demos/microservices-demo/productcatalogservice
     workspace: src/productcatalogservice
-  - imageName: gcr.io/microservices-demo-app/recommendationservice
+  - imageName: gcr.io/rnm-stackdriver-demos/microservices-demo/recommendationservice
     workspace: src/recommendationservice
-  - imageName: gcr.io/microservices-demo-app/shippingservice
+  - imageName: gcr.io/rnm-stackdriver-demos/microservices-demo/shippingservice
     workspace: src/shippingservice
-  - imageName: gcr.io/microservices-demo-app/checkoutservice
+  - imageName: gcr.io/rnm-stackdriver-demos/microservices-demo/checkoutservice
     workspace: src/checkoutservice
-  - imageName: gcr.io/microservices-demo-app/paymentservice
+  - imageName: gcr.io/rnm-stackdriver-demos/microservices-demo/paymentservice
     workspace: src/paymentservice
-  - imageName: gcr.io/microservices-demo-app/currencyservice
+  - imageName: gcr.io/rnm-stackdriver-demos/microservices-demo/currencyservice
     workspace: src/currencyservice
-  - imageName: gcr.io/microservices-demo-app/cartservice
+  - imageName: gcr.io/rnm-stackdriver-demos/microservices-demo/cartservice
     workspace: src/cartservice
-  - imageName: gcr.io/microservices-demo-app/frontend
+  - imageName: gcr.io/rnm-stackdriver-demos/microservices-demo/frontend
     workspace: src/frontend
-  - imageName: gcr.io/microservices-demo-app/loadgenerator
+  - imageName: gcr.io/rnm-stackdriver-demos/microservices-demo/loadgenerator
     workspace: src/loadgenerator
+
 deploy:
   kubectl:
     manifests:
     - ./kubernetes-manifests/**.yaml
+
+profiles:
+  - name: gcb
+    build:
+      googleCloudBuild:
+        diskSizeGb: 300
+        machineType: "N1_HIGHCPU_32"

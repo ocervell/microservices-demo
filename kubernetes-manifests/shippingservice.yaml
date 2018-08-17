@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: server
-        image: gcr.io/microservices-demo-app/shippingservice
+        image: gcr.io/rnm-stackdriver-demos/microservices-demo/shippingservice
         ports:
         - containerPort: 50051
         readinessProbe:
