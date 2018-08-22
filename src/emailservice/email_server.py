@@ -27,19 +27,20 @@ import grpc
 import demo_pb2
 import demo_pb2_grpc
 
-# from opencensus.trace.ext.grpc import server_interceptor
-# from opencensus.trace.samplers import always_on
-# from opencensus.trace.exporters import stackdriver_exporter
-# from opencensus.trace.exporters import print_exporter
+from opencensus.trace.ext.grpc import server_interceptor
+from opencensus.trace.samplers import always_on
+from opencensus.trace.exporters import stackdriver_exporter
+from opencensus.trace.exporters import print_exporter
 
 # import googleclouddebugger
 
-# try:
-#     sampler = always_on.AlwaysOnSampler()
-#     exporter = stackdriver_exporter.StackdriverExporter()
-#     tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
-# except:
-#     tracer_interceptor = server_interceptor.OpenCensusServerInterceptor()
+try:
+     sampler = always_on.AlwaysOnSampler()
+     exporter = stackdriver_exporter.StackdriverExporter()
+     tracer_interceptor = server_interceptor.OpenCensusServerInterceptor(sampler, exporter)
+     print("Stackdriver tracer gRPC interceptor configured.")
+except:
+     tracer_interceptor = server_interceptor.OpenCensusServerInterceptor()
 
 # try:
 #     googleclouddebugger.enable(
@@ -110,7 +111,7 @@ class DummyEmailService(demo_pb2_grpc.EmailServiceServicer):
     return demo_pb2.Empty()
 
 def start(dummy_mode):
-  server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))#, interceptors=(tracer_interceptor,))
+  server = grpc.server(futures.ThreadPoolExecutor(max_workers=10), interceptors=(tracer_interceptor,))
   if dummy_mode:
     demo_pb2_grpc.add_EmailServiceServicer_to_server(DummyEmailService(), server)
   else:
